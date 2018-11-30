@@ -1,0 +1,47 @@
+/* La implementacion de esta estrategia filtrar de manera digital la informacion (PULSOS) suministrada por encoders rotacionales. La estructura del filtro solo es aplicable para este tipo de encoders, segun la bibliografia */
+
+
+
+ Secuencia para la ejecucion iteractiva del filtro de Kalman
+   
+   1-Al iniciar el programa, el metodo 
+   "metodoParaCalcularMatrices_A_b_Q_P(tiempo,q)" debera cargar los valores
+   de las matrices A,b,Q y P. la unica matriz que debe cambiar su valor es P, se
+   actualiza.
+   2-Calcular los valores de orientacion angular, velocidad angular y aceleracion
+   angular, empleando el método 
+   "metodoParaCalcularVariables(bajo,alto,pulsoEncoder,tiempo)". Este metodo
+   debe ejecutarce iterativamente cada vez que se haya determinado el muestreo
+   de los pulsos del encoder.
+   3-ejecutar los metodos:
+            metodoParaEfectuarCalculo_X_futuro();
+            metodoParaEfectuarCalculo_P_futuro();
+            metodoParaCalcularGananciaKalman(R);
+            metodoParaCalcularCorreccionProbabilidad();
+            metodoParaCorregirLaMatriz_X_predicha();
+     estos metodos ejecutan el procedimiento de prediccion, correccion y actualizacion
+     de los valores. Metodos ejecutados cada vez que se haya suministrado informacion
+     de los encoders.
+
+//Ejemplo de valores de variables de partida para correr el filtro 
+
+float tiempo=0.31457; //tiempo de muestreo (valor q puede ser cambiado dependiendo de los requerimientos)
+float q=1.0;//parametro necesario para el funcionamiento del filtro
+float R1[2]={0.00314,0.0};//fila 1 de la matriz del modelo del encodar (ejemplo)
+float R2[2]={0.0,0.01};//fila 2 de la matriz del modelo del encodear (ejemplo)
+float ak// velocidad 
+
+
+Secuencia Inicial de Ejecucion del Filtro:
+
+	metodoParaCargarMatriz_X();
+        metodoParaEfectuarCalculo_X_futuro(ak);
+        metodoParaCargarMatriz_P();
+        metodoParaEfectuarCalculo_P_futuro(tiempo);    
+        metodoParaCalcularGananciaKalman(R1,R2);
+        metodoParaCalcularCorreccionProbabilidad();
+        metodoParaGuardarValores_P();
+
+Paso de correccion de 
+ 	metodoParaCorregirLaMatriz_X_predicha();
+        metodoParaGuardarValores_X();
